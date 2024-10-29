@@ -9,9 +9,9 @@ public class RSAKeyPairGenerator {
     private PrivateKey privateKey;
     private PublicKey publicKey;
 
-    public RSAKeyPairGenerator() throws NoSuchAlgorithmException {
+    public RSAKeyPairGenerator(int size) throws NoSuchAlgorithmException {
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        keyGen.initialize(1024);
+        keyGen.initialize(size);
         KeyPair pair = keyGen.generateKeyPair();
         this.privateKey = pair.getPrivate();
         this.publicKey = pair.getPublic();
@@ -36,10 +36,22 @@ public class RSAKeyPairGenerator {
     }
     
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
-        RSAKeyPairGenerator keyPairGenerator = new RSAKeyPairGenerator();
+        RSAKeyPairGenerator keyPairGenerator = new RSAKeyPairGenerator(1024);
         keyPairGenerator.writeToFile("RSA/publicKey", keyPairGenerator.getPublicKey().getEncoded());
         keyPairGenerator.writeToFile("RSA/privateKey", keyPairGenerator.getPrivateKey().getEncoded());
         System.out.println(Base64.getEncoder().encodeToString(keyPairGenerator.getPublicKey().getEncoded()));
         System.out.println(Base64.getEncoder().encodeToString(keyPairGenerator.getPrivateKey().getEncoded()));
+
+        RSAKeyPairGenerator keyPairGenerator2 = new RSAKeyPairGenerator(2048);
+        keyPairGenerator.writeToFile("RSA/publicKey", keyPairGenerator2.getPublicKey().getEncoded());
+        keyPairGenerator.writeToFile("RSA/privateKey", keyPairGenerator2.getPrivateKey().getEncoded());
+        System.out.println(Base64.getEncoder().encodeToString(keyPairGenerator2.getPublicKey().getEncoded()));
+        System.out.println(Base64.getEncoder().encodeToString(keyPairGenerator2.getPrivateKey().getEncoded()));
+
+        RSAKeyPairGenerator keyPairGenerator3 = new RSAKeyPairGenerator(384);
+        keyPairGenerator.writeToFile("RSA/publicKey", keyPairGenerator3.getPublicKey().getEncoded());
+        keyPairGenerator.writeToFile("RSA/privateKey", keyPairGenerator3.getPrivateKey().getEncoded());
+        System.out.println(Base64.getEncoder().encodeToString(keyPairGenerator3.getPublicKey().getEncoded()));
+        System.out.println(Base64.getEncoder().encodeToString(keyPairGenerator3.getPrivateKey().getEncoded()));
     }
 }
